@@ -71,7 +71,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="loading-text" id="loading-text">문구를 생성하고 있어요..</div>
+        <div class="loading-text" id="loading-text">KICK 버전의 문구를 생성하고 있어요..</div>
         <div id="dynamic-text" style="display: none;"></div>
         <div id="copy-success" class="copy-success-message"></div>
         <button class="copy-button" onclick="copyText()">제목</button>
@@ -153,14 +153,14 @@
 `;
 
         function updateText() {
-            const days = ["일", "월", "화", "수", "목", "금", "토"];
+            const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
             const now = new Date();
             const year = String(now.getFullYear()).slice(2);  // 연도 마지막 두 자리
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const date = String(now.getDate()).padStart(2, '0');
             const day = days[now.getDay()];
 
-            const text = `(${year}.${month}.${date}.${day}) Study with me｜50-10min 실시간 공부｜스터디 위드 미｜수험생｜고시생｜공시생｜해솔이요｜라이브｜LIVE｜ASMR`;
+            const text = `(${month}.${date}.${day}) For CSAT｜Study｜LifeLive｜HaeSolEYo`;
             document.getElementById('dynamic-text').innerText = text;
             document.getElementById('dynamic-text').style.display = 'block';
             document.getElementById('loading-text').style.display = 'none';
