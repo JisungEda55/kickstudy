@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAESOLEYO</title>
+    <style>
+        @font-face {
+            font-family: 'TheJamsil5Bold';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+        
+        body {
+            font-family: 'TheJamsil5Bold', Arial, sans-serif; /* TheJamsil5Bold 폰트 사용 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-weight: 700;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+        }
+        .copy-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #fc3c1c;
+            color: white;
+            border: none;
+            font-weight: 700;
+            border-radius: 5px;
+            transition: background-color 0.3s ease; /* 배경색 변화 애니메이션 추가 */
+        }
+        .copy-button:hover {
+            background-color: #de2c1f;
+        }
+        .copy-success-message {
+            color: green;
+            margin-top: 10px;
+            opacity: 0; /* 초기에는 투명하게 설정 */
+            transition: opacity 0.3s ease; /* 투명도 변화 애니메이션 추가 */
+        }
+        .copy-success-message.show {
+            opacity: 1; /* 복사 성공 시 투명도를 1로 변경하여 나타나게 함 */
+        }
+        .loading-text {
+            font-size: 24px;
+            color: #333;
+            margin-top: 20px;
+            animation: popIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        @keyframes popIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="loading-text" id="loading-text">문구를 생성하고 있어요..</div>
+        <div id="dynamic-text" style="display: none;"></div>
+        <div id="copy-success" class="copy-success-message"></div>
+        <button class="copy-button" onclick="copyText()">제목</button>
+        <button class="copy-button" onclick="copyDescription()">설명</button>
+    </div>
+
+    <script>
+        const longDescription = `
+[ Plus ] KOR
+✅ 시험 및 기간
+➡️  2025 수능을 준비하는 재수생 ✏️
+➡️ 인터넷 강의와 함께 독학재수를 하고 있습니다.
+➡️ 방송화면에 인터넷 강의 및 교재가 보이지 않도록 최선의 노력을 다하고 있습니다.
+      혹시 방송화면에 가시성 좋게 강의 또는 교재가 보이신다면 연락바랍니다.
+
+✅ Time table
+➡️ 우측에 표시되는 시간표는 jisungeda55점github점io/TimeCast/ 에서 만나보실 수 있습니다.
+➡️ 우측 상단의 영상은 서울의 실시간 영상입니다. https://www.youtube.com/live/UhULZg8QOiE?si=5Lel5gZV1UEx8eS9
+
+✅ 사용가능한 명령어
+🛑 !안녕 ( !hi )
+🛑 !출석 ( !here, !imhere )
+🛑 !들어갑니다 ( !bye )
+
+✅ 기타 내용
+➡️ 자유롭게 채팅창에서 대화를 나누셔도 되요!
+➡️ 당신의 앞날을 응원합니다.
+➡️ 저랑 같은 시간을 공부하고 싶으시면 링크를 접속해보세요! jisungeda55점github점io/TimeCast/
+➡️ 서로 존중하는 바른 문화를 지향합니다.
+➡️ 디데이를 추가하고 싶으시면 인스타그램에 문의해보세요.  haesoleyo
+➡️ 개인정보 보호를 위하여 개인적인 인스타그램, 줌, 전화번호의 공유는 제한합니다.
+➡️ 시간의 시작 또는 끝마다 알림이 울려요!
+➡️ 채팅은 잠시 쉴 때 마다 볼게요!
+
+✅ 문의
+➡️ 인스타그램 : haesoleyo
+➡️ 메일 : Coming SOON!
+
+✅ Mood theme 및 기타 기능들은 직접 만들어서 사용하고 있어요!
+➡️ Mood theme - Sound of hot spring water
+➡️ Github - github점com/JisungEda55 
+[다양한 도구들이 있어요 원하시면 출처를 남기고 사용해주세요!] 
+
+
+[ Plus ] ENG
+✅ Exam and Study Schedule
+📝 A student preparing for the 2025 Korean College Scholastic Ability Test (수능).
+➡️ Studying independently with online lectures.
+➡️ Making efforts to ensure that the internet lectures and textbooks are not visible on the broadcast screen.
+      If the lectures or textbooks are visible on the broadcast screen, please contact me.
+
+✅ Time Table
+➡️ The Timetable displayed on the right can be found at jisungeda55(dot)github(dot)io/TimeCast/.
+➡️ The video in the top right corner is a live stream of Seoul. You can watch it here: https://www.youtube.com/live/UhULZg8QOiE?si=5Lel5gZV1UEx8eS9
+
+✅ Available Commands
+🛑 !안녕 ( !hi )
+🛑 !출석 ( !here, !imhere )
+🛑 !들어갑니다 ( !bye )
+
+✅ Additional Information
+➡️ Feel free to chat and converse in the chat window!
+➡️ I support you in your future endeavors.
+➡️ If you want to study together at the same time, check out the link! jisungeda55(dot)github(dot)io/TimeCast/
+➡️ We promote a culture of mutual respect.
+➡️ If you want to add a countdown timer, feel free to contact me on Instagram. haesoleyo
+➡️ For privacy reasons, sharing personal Instagram accounts, Zoom IDs, and phone numbers is restricted.
+➡️ Notifications will ring at the beginning or end of each hour!
+➡️ I'll check the chat whenever I take a short break!
+
+✅ Contact Information
+➡️ Instagram: haesoleyo
+➡️ Email: Coming SOON!
+
+✅ I've personally created the mood theme and other features!
+➡️ Mood theme - The sound of tapping rain and the scratch of a pencil
+➡️ Github - github(dot)com/JisungEda55
+[Feel free to use various tools, just remember to credit the source!]
+`;
+
+        function updateText() {
+            const days = ["일", "월", "화", "수", "목", "금", "토"];
+            const now = new Date();
+            const year = String(now.getFullYear()).slice(2);  // 연도 마지막 두 자리
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const date = String(now.getDate()).padStart(2, '0');
+            const day = days[now.getDay()];
+
+            const text = `(${year}.${month}.${date}.${day}) Study with me｜50-10min 실시간 공부｜스터디 위드 미｜수험생｜고시생｜공시생｜해솔이요｜라이브｜LIVE｜ASMR`;
+            document.getElementById('dynamic-text').innerText = text;
+            document.getElementById('dynamic-text').style.display = 'block';
+            document.getElementById('loading-text').style.display = 'none';
+            return text;
+        }
+
+        function copyText() {
+            const text = updateText();
+            navigator.clipboard.writeText(text).then(() => {
+                showCopySuccessMessage();
+            }).catch(err => {
+                console.error('텍스트 복사 실패: ', err);
+            });
+        }
+
+        function copyDescription() {
+            navigator.clipboard.writeText(longDescription).then(() => {
+                showCopySuccessMessage('설명 복사 성공!');
+            }).catch(err => {
+                console.error('설명 복사 실패: ', err);
+            });
+        }
+
+        function showCopySuccessMessage(message) {
+            const copySuccessMessage = document.getElementById('copy-success');
+            copySuccessMessage.innerText = message || '복사 성공!';
+            copySuccessMessage.classList.add('show'); // 클래스를 추가하여 메시지를 나타나게 함
+            setTimeout(() => {
+                copySuccessMessage.classList.remove('show'); // 일정 시간 후 클래스를 제거하여 메시지를 숨김
+            }, 2000); // 2초 후 메시지 숨김
+        }
+
+        // 페이지 로드 후 랜덤한 시간에 updateText 함수 실행
+        window.onload = function() {
+            const randomDelay = Math.random() * (1.2 - 0.5) + 0.5; // 0.5에서 1.2 사이의 랜덤한 숫자 생성
+            setTimeout(updateText, randomDelay * 1000); // 초 단위로 변환하여 setTimeout에 전달
+        };
+    </script>
+</body>
+</html>
